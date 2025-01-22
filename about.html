@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/fa6dd79b50.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <nav>
+        <img src="images/logo.png" class="logo">
+            <ul id="sidemenu">
+                <li><a href="/">Home</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./services.html">Services</a></li>
+                <li><a href="./portfolio.html">Portfolio</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
+            </ul>
+            <i class="fa-solid fa-bars" onclick="openmenu()"></i>
+    </nav>
+    <div id="about">
+        
+        <div class="container">
+           
+            <div class="row">
+                <div class="about-col-1">
+                    <img src="images/user.jpg">
+                </div>
+                <div class="about-col-2">
+                <h1 class="sub-title"> About Me</h1>
+                <p> I'm Sanjil Shahi, a passionate QA Engineer with a strong focus on delivering high-quality software. With experience at Ojas Digital, Axios Softwork, and Rumsan. My goal is to ensure every product I work on is reliable and user-friendly. Let's connect to discuss how I can help your team achieve excellence!</p>
+                   <div class="tab-titles">
+                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                    <p class="tab-links" onclick="opentab('education')">Education</p>
+                   </div>
+                   <!----------------------------- Skills ----------------------------------------->
+                   <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                             <li><span>Manual Testing</span><br>User Acceptance Testing</li>
+                             <li><span>API Testing</span><br>API Functional Testing</li>
+                             <li><span>Performace Testing </span><br>Performance Testing, Stress Testing, Load Testing</li>
+                        </ul>
+                   </div>
+                <!--------------------------------- Experience ----------------------------------->
+                   <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>Jun 2024- Present</span><br>Mid Level Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                            <li><span>Jan 2024- Jun 2024</span><br>Junior Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                            <li><span>Sep 2023- Dec 2023</span><br>Quality Assurance Intern <br> (Axios Softwork)</li>
+                        </ul>
+                   </div>
+                   <!---------------------------- Education ------------------------------------>
+                   <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2023</span><br>BICT from Virinchi International College, Lalitpur</li>
+                            <li><span>2018</span><br>+2 Science from Banepa Nist, Banepa</li>
+                            <li><span>2016</span><br>SEE from Rambhakta Memorial School, Banepa</li>
+                        </ul>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
