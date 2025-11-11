@@ -1,0 +1,49 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+<div id="portfolio">
+    <div class="container">
+      <h1 class="sub-title"> My Work</h1>
+      <div class="work-list">
+          <% if (portfolio.length === 0) { %>
+            <div class="work">
+                <img src="/assets/images/work-1.png">
+                <div class="layer">
+                    <h3>Social Media App</h3>
+                    <p> This app connects you to the talented people around the world. Click to visit website</p>
+                    <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/images/work-2.png">
+                <div class="layer">
+                    <h3>Online Bus Ticket Booking System</h3>
+                    <p> This is Online Bus Ticket Booking System. Click to visit website</p>
+                    <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/images/work-3.png">
+                <div class="layer">
+                    <h3>Online Electricity Billing System</h3>
+                    <p> This is Online Electricity Billing System. Click to visit website</p>
+                    <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                </div>
+            </div>
+          <% } else { %>
+            <% portfolio.forEach(item => { %>
+              <div class="work">
+                  <img src="<%= item.image %>">
+                  <div class="layer">
+                      <h3><%= item.title %></h3>
+                      <p><%= item.description %></p>
+                      <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                  </div>
+              </div>
+            <% }) %>
+          <% } %>
+      </div>
+      <a href="#" class="btn">See more</a>
+    </div>
+</div>
+<%- include('partials/footer') %>
+

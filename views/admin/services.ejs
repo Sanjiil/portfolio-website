@@ -1,0 +1,88 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="padding-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <h1 class="sub-title">Services Management</h1>
+    <div>
+      <a href="/admin/dashboard" class="btn" style="margin-right:10px;">Back to Dashboard</a>
+      <form method="post" action="/admin/logout" style="display:inline;">
+        <button type="submit" class="btn btn2">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <h2 style="margin-top:30px;">Add New Service</h2>
+  <% if (flash && flash.serviceSuccess) { %>
+    <p style="color:#61b752;margin-top:10px;"><%= flash.serviceSuccess %></p>
+  <% } %>
+  <% if (flash && flash.serviceError) { %>
+    <p style="color:#ff6b6b;margin-top:10px;"><%= flash.serviceError %></p>
+  <% } %>
+  <form id="serviceForm" method="post" action="/admin/services" style="margin-top:10px;max-width:600px;" novalidate>
+    <input id="serviceNameInput" type="text" name="name" placeholder="Service name" required>
+    <small id="serviceNameError" style="color:#ff6b6b;display:none;">Please enter a service name (2+ characters).</small>
+    <textarea id="serviceDescInput" name="description" rows="3" placeholder="Description" required></textarea>
+    <small id="serviceDescError" style="color:#ff6b6b;display:none;">Please enter a description (10+ characters).</small>
+    <button type="submit" class="btn btn2" style="margin-top:10px;">Add Service</button>
+  </form>
+
+  <h2 style="margin-top:40px;">Existing Services</h2>
+  <div class="services-list" style="margin-top:20px;">
+    <% if (!services || services.length === 0) { %>
+      <p>No services yet. Add your first service above.</p>
+    <% } else { %>
+      <% services.forEach(s => { %>
+        <div style="background:#262626;padding:30px;border-radius:10px;margin-bottom:20px;">
+          <h3 style="margin-bottom:10px;"><%= s.name %></h3>
+          <p style="margin-bottom:20px;color:#ababab;"><%= s.description %></p>
+          <form method="post" action="/admin/services/<%= s.id %>" style="margin-top:20px;">
+            <input type="text" name="name" value="<%= s.name %>" required>
+            <textarea name="description" rows="3" required><%= s.description %></textarea>
+            <button type="submit" class="btn" style="margin-top:10px;">Update Service</button>
+          </form>
+          <form method="post" action="/admin/services/<%= s.id %>/delete" style="margin-top:10px;">
+            <button type="submit" class="btn" style="background:#ff6b6b;border-color:#ff6b6b;">Delete Service</button>
+          </form>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+<script>
+  (function(){
+    var form = document.getElementById('serviceForm');
+    if (!form) return;
+
+    var nameInput = document.getElementById('serviceNameInput');
+    var descInput = document.getElementById('serviceDescInput');
+    var nameError = document.getElementById('serviceNameError');
+    var descError = document.getElementById('serviceDescError');
+
+    function hideErrors(){
+      nameError.style.display = 'none';
+      descError.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function(e){
+      hideErrors();
+      var hasError = false;
+      var name = (nameInput.value || '').trim();
+      var desc = (descInput.value || '').trim();
+
+      if (name.length < 2){
+        nameError.style.display = 'block';
+        hasError = true;
+      }
+      if (desc.length < 10){
+        descError.style.display = 'block';
+        hasError = true;
+      }
+
+      if (hasError){
+        e.preventDefault();
+        return;
+      }
+    });
+  })();
+</script>
+<%- include('../partials/footer') %>
+

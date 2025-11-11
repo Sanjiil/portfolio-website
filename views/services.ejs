@@ -1,0 +1,40 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+<div id="services">
+    <div class="container">
+     <h1 class="sub-title"> My Services</h1>
+     <div class="services-list">
+        <% if (services.length === 0) { %>
+          <div>
+            <i class="fa-solid fa-code"></i>
+            <h2>API Functional Testing</h2>
+            <p>API Functional Testing using Postman</p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-brands fa-codepen"></i>
+            <h2>UAT </h2>
+            <p>User Acceptance Testing of Software Products</p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-brands fa-quinscape"></i>
+            <h2>Performace Testing </h2>
+            <p>Performace of Software Product</p>
+            <a href="#">Learn more</a>
+          </div>
+        <% } else { %>
+          <% services.forEach(svc => { %>
+            <div>
+              <i class="fa-solid fa-code"></i>
+              <h2><%= svc.name %></h2>
+              <p><%= svc.description %></p>
+              <a href="#">Learn more</a>
+            </div>
+          <% }) %>
+        <% } %>
+    </div>
+ </div>
+</div>
+<%- include('partials/footer') %>
+

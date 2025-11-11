@@ -1,0 +1,182 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+<div id="header">
+    <div class="container">
+        <div class="header-text">
+            <p>Quality Assurance</p>
+            <h1> Hi, I'm <span>Sanjil Shahi.</span><br></h1>
+        </div>
+    </div>
+</div>
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="/assets/images/user.jpg">
+            </div>
+            <div class="about-col-2">
+            <h1 class="sub-title"> About Me</h1>
+            <p> I'm Sanjil Shahi, a passionate QA Engineer with a strong focus on delivering high-quality software. With experience at Ojas Digital, Axios Softwork, and Rumsan. My goal is to ensure every product I work on is reliable and user-friendly. Let's connect to discuss how I can help your team achieve excellence!</p>
+               <div class="tab-titles">
+                <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                <p class="tab-links" onclick="opentab('education')">Education</p>
+               </div>
+               <div class="tab-contents active-tab" id="skills">
+                    <ul>
+                         <li><span>Manual Testing</span><br>User Acceptance Testing</li>
+                         <li><span>API Testing</span><br>API Functional Testing</li>
+                         <li><span>Performace Testing </span><br>Performance Testing, Stress Testing, Load Testing</li>
+                    </ul>
+               </div>
+               <div class="tab-contents" id="experience">
+                    <ul>
+                        <li><span>Jun 2024- Present</span><br>Mid Level Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                        <li><span>Jan 2024- Jun 2024</span><br>Junior Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                        <li><span>Sep 2023- Dec 2023</span><br>Quality Assurance Intern <br> (Axios Softwork)</li>
+                    </ul>
+               </div>
+               <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>2023</span><br>BICT from Virinchi International College, Lalitpur</li>
+                        <li><span>2018</span><br>+2 Science from Banepa Nist, Banepa</li>
+                        <li><span>2016</span><br>SEE from Rambhakta Memorial School, Banepa</li>
+                    </ul>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="services">
+    <div class="container">
+     <h1 class="sub-title"> My Services</h1>
+     <div class="services-list">
+        <% if (services.length === 0) { %>
+          <div>
+            <i class="fa-solid fa-code"></i>
+            <h2>API Functional Testing</h2>
+            <p>API Functional Testing using Postman</p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-brands fa-codepen"></i>
+            <h2>UAT </h2>
+            <p>User Acceptance Testing of Software Products</p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-brands fa-quinscape"></i>
+            <h2>Performace Testing </h2>
+            <p>Performace of Software Product</p>
+            <a href="#">Learn more</a>
+          </div>
+        <% } else { %>
+          <% services.forEach(svc => { %>
+            <div>
+              <i class="fa-solid fa-code"></i>
+              <h2><%= svc.name %></h2>
+              <p><%= svc.description %></p>
+              <a href="#">Learn more</a>
+            </div>
+          <% }) %>
+        <% } %>
+    </div>
+ </div>
+</div>
+<div id="portfolio">
+      <div class="container">
+        <h1 class="sub-title"> My Work</h1>
+        <div class="work-list">
+            <% if (portfolio.length === 0) { %>
+              <div class="work">
+                  <img src="/assets/images/work-1.png">
+                  <div class="layer">
+                      <h3>Social Media App</h3>
+                      <p> This app connects you to the talented people around the world. Click to visit website</p>
+                      <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                  </div>
+              </div>
+              <div class="work">
+                  <img src="/assets/images/work-2.png">
+                  <div class="layer">
+                      <h3>Online Bus Ticket Booking System</h3>
+                      <p> This is Online Bus Ticket Booking System. Click to visit website</p>
+                      <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                  </div>
+              </div>
+              <div class="work">
+                  <img src="/assets/images/work-3.png">
+                  <div class="layer">
+                      <h3>Online Electricity Billing System</h3>
+                      <p> This is Online Electricity Billing System. Click to visit website</p>
+                      <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                  </div>
+              </div>
+            <% } else { %>
+              <% portfolio.forEach(item => { %>
+                <div class="work">
+                    <img src="<%= item.image %>">
+                    <div class="layer">
+                        <h3><%= item.title %></h3>
+                        <p><%= item.description %></p>
+                        <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+              <% }) %>
+            <% } %>
+        </div>
+        <a href="#" class="btn">See more</a>
+      </div>
+</div>
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact Me</h1>
+                <p><i class="fa-solid fa-paper-plane"></i> <%= settings.email %></p>
+                <p><i class="fa-solid fa-mobile-screen-button"></i> <%= settings.phone %></p>
+                <div class="social-icons">
+                    <a href="<%= settings.facebook %>"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="<%= settings.linkedin %>"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="<%= settings.github %>"><i class="fa-brands fa-github"></i></a>
+                    <a href="<%= settings.instagram %>"><i class="fa-brands fa-instagram"></i></i></a>
+                </div>
+                <% if (contactLinks && contactLinks.length > 0) { %>
+                  <div class="extra-contact-links">
+                    <h3>More Ways to Connect</h3>
+                    <ul>
+                      <% contactLinks.forEach(link => { %>
+                        <li>
+                          <i class="<%= link.icon %>"></i>
+                          <a href="<%= link.url %>" target="_blank" rel="noreferrer"><%= link.label %></a>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+                <% } %>
+                <a href="/assets/images/CV_SANJIL_SHAHI.pdf" download class="btn btn2">Download CV</a>
+            </div>
+            <div class="contact-right">
+                <form method="post" action="https://script.google.com/macros/s/AKfycbyP-EQJqGfvRexVjZmJ-WuoFyX0HOco24BK-xTIgq09AzsGXWROACRDWi-a_muzp99p1w/exec">
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
+                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                    <button type="submit" class="btn btn2">Submit</button>
+                </form>
+                <span id="msg"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+    function opentab(tabname){
+        for(tablink of tablinks){ tablink.classList.remove("active-link") }
+        for(tabcontent of tabcontents){ tabcontent.classList.remove("active-tab") }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+</script>
+<%- include('partials/footer') %>
+

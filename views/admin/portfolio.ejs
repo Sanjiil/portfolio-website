@@ -1,0 +1,113 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="padding-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <h1 class="sub-title">Portfolio Management</h1>
+    <div>
+      <a href="/admin/dashboard" class="btn" style="margin-right:10px;">Back to Dashboard</a>
+      <form method="post" action="/admin/logout" style="display:inline;">
+        <button type="submit" class="btn btn2">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <h2 style="margin-top:30px;">Add New Portfolio Item</h2>
+  <% if (flash && flash.portfolioSuccess) { %>
+    <p style="color:#61b752;margin-top:10px;"><%= flash.portfolioSuccess %></p>
+  <% } %>
+  <% if (flash && flash.portfolioError) { %>
+    <p style="color:#ff6b6b;margin-top:10px;"><%= flash.portfolioError %></p>
+  <% } %>
+  <form id="portfolioForm" method="post" action="/admin/portfolio" style="margin-top:10px;max-width:600px;" novalidate>
+    <input id="portfolioTitleInput" type="text" name="title" placeholder="Title" required>
+    <small id="portfolioTitleError" style="color:#ff6b6b;display:none;">Please enter a title (3+ characters).</small>
+    <textarea id="portfolioDescInput" name="description" rows="3" placeholder="Description" required></textarea>
+    <small id="portfolioDescError" style="color:#ff6b6b;display:none;">Please enter a description (10+ characters).</small>
+    <input id="portfolioImageInput" type="text" name="image" placeholder="Image URL (e.g. /assets/images/work-1.png)" required>
+    <small id="portfolioImageError" style="color:#ff6b6b;display:none;">Please enter a valid image URL (must start with / or http).</small>
+    <button type="submit" class="btn btn2" style="margin-top:10px;">Add Portfolio Item</button>
+  </form>
+
+  <h2 style="margin-top:40px;">Existing Portfolio Items</h2>
+  <div style="margin-top:20px;">
+    <% if (!portfolio || portfolio.length === 0) { %>
+      <p>No portfolio items yet. Add your first item above.</p>
+    <% } else { %>
+      <div class="work-list" style="margin-bottom:30px;">
+        <% portfolio.forEach(p => { %>
+          <div class="work" style="margin-bottom:30px;">
+            <img src="<%= p.image %>" alt="<%= p.title %>">
+            <div class="layer">
+              <h3><%= p.title %></h3>
+              <p><%= p.description %></p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:30px;">
+        <% portfolio.forEach(p => { %>
+          <div style="background:#262626;padding:30px;border-radius:10px;">
+            <h3 style="margin-bottom:10px;"><%= p.title %></h3>
+            <p style="margin-bottom:10px;color:#ababab;font-size:14px;"><%= p.description %></p>
+            <p style="margin-bottom:20px;color:#0074b7;font-size:12px;word-break:break-all;"><%= p.image %></p>
+            <form method="post" action="/admin/portfolio/<%= p.id %>" style="margin-top:20px;">
+              <input type="text" name="title" value="<%= p.title %>" required style="margin-bottom:10px;">
+              <textarea name="description" rows="3" required style="margin-bottom:10px;"><%= p.description %></textarea>
+              <input type="text" name="image" value="<%= p.image %>" required style="margin-bottom:10px;">
+              <button type="submit" class="btn" style="margin-top:10px;">Update Portfolio Item</button>
+            </form>
+            <form method="post" action="/admin/portfolio/<%= p.id %>/delete" style="margin-top:10px;">
+              <button type="submit" class="btn" style="background:#ff6b6b;border-color:#ff6b6b;">Delete Portfolio Item</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>
+<script>
+  (function(){
+    var form = document.getElementById('portfolioForm');
+    if (!form) return;
+
+    var titleInput = document.getElementById('portfolioTitleInput');
+    var descInput = document.getElementById('portfolioDescInput');
+    var imageInput = document.getElementById('portfolioImageInput');
+    var titleError = document.getElementById('portfolioTitleError');
+    var descError = document.getElementById('portfolioDescError');
+    var imageError = document.getElementById('portfolioImageError');
+
+    function hideErrors(){
+      titleError.style.display = 'none';
+      descError.style.display = 'none';
+      imageError.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function(e){
+      hideErrors();
+      var hasError = false;
+      var title = (titleInput.value || '').trim();
+      var desc = (descInput.value || '').trim();
+      var image = (imageInput.value || '').trim();
+
+      if (title.length < 3){
+        titleError.style.display = 'block';
+        hasError = true;
+      }
+      if (desc.length < 10){
+        descError.style.display = 'block';
+        hasError = true;
+      }
+      if (!image || (!image.startsWith('/') && !image.startsWith('http://') && !image.startsWith('https://'))){
+        imageError.style.display = 'block';
+        hasError = true;
+      }
+
+      if (hasError){
+        e.preventDefault();
+        return;
+      }
+    });
+  })();
+</script>
+<%- include('../partials/footer') %>
+

@@ -1,0 +1,226 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="padding-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <h1 class="sub-title">Contact &amp; Social Settings</h1>
+    <div>
+      <a href="/admin/dashboard" class="btn" style="margin-right:10px;">Back to Dashboard</a>
+      <form method="post" action="/admin/logout" style="display:inline;">
+        <button type="submit" class="btn btn2">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <p style="color:#ababab;margin-bottom:20px;">
+    Update the contact and social information displayed across the public site. Email and phone are required.
+  </p>
+
+  <% if (flash && flash.settingsSuccess) { %>
+    <p style="color:#61b752;margin-top:10px;"><%= flash.settingsSuccess %></p>
+  <% } %>
+  <% if (flash && flash.settingsError) { %>
+    <p style="color:#ff6b6b;margin-top:10px;"><%= flash.settingsError %></p>
+  <% } %>
+
+  <form id="settingsForm" method="post" action="/admin/settings" style="margin-top:20px;max-width:600px;" novalidate>
+    <label class="admin-label" for="settingsEmail">Email *</label>
+    <input id="settingsEmail" type="email" name="email" placeholder="Email address" value="<%= settings.email || '' %>" required>
+    <small id="settingsEmailError" style="color:#ff6b6b;display:none;">Please enter a valid email address.</small>
+
+    <label class="admin-label" for="settingsPhone" style="margin-top:15px;">Phone *</label>
+    <input id="settingsPhone" type="text" name="phone" placeholder="Phone number" value="<%= settings.phone || '' %>" required>
+    <small id="settingsPhoneError" style="color:#ff6b6b;display:none;">Please enter a phone number.</small>
+
+    <label class="admin-label" for="settingsFacebook" style="margin-top:15px;">Facebook URL</label>
+    <input id="settingsFacebook" type="url" name="facebook" placeholder="https://facebook.com/..." value="<%= settings.facebook || '' %>">
+    <small id="settingsFacebookError" style="color:#ff6b6b;display:none;">Please enter a valid URL including http or https.</small>
+
+    <label class="admin-label" for="settingsLinkedin" style="margin-top:15px;">LinkedIn URL</label>
+    <input id="settingsLinkedin" type="url" name="linkedin" placeholder="https://linkedin.com/in/..." value="<%= settings.linkedin || '' %>">
+    <small id="settingsLinkedinError" style="color:#ff6b6b;display:none;">Please enter a valid URL including http or https.</small>
+
+    <label class="admin-label" for="settingsGithub" style="margin-top:15px;">GitHub URL</label>
+    <input id="settingsGithub" type="url" name="github" placeholder="https://github.com/..." value="<%= settings.github || '' %>">
+    <small id="settingsGithubError" style="color:#ff6b6b;display:none;">Please enter a valid URL including http or https.</small>
+
+    <label class="admin-label" for="settingsInstagram" style="margin-top:15px;">Instagram URL</label>
+    <input id="settingsInstagram" type="url" name="instagram" placeholder="https://instagram.com/..." value="<%= settings.instagram || '' %>">
+    <small id="settingsInstagramError" style="color:#ff6b6b;display:none;">Please enter a valid URL including http or https.</small>
+
+    <button type="submit" class="btn btn2" style="margin-top:20px;">Save Settings</button>
+  </form>
+
+  <div id="custom-links" style="margin-top:50px;">
+    <h2 class="sub-title" style="font-size:28px;">Additional Contact Links</h2>
+    <p style="color:#ababab;margin-top:10px;">Add other contact or social profiles. Provide a label, URL, and optional Font Awesome icon class (e.g. <code>fa-brands fa-x-twitter</code>).</p>
+
+    <form id="customLinkForm" method="post" action="/admin/settings/links" style="margin-top:20px;max-width:600px;" novalidate>
+      <label class="admin-label" for="linkLabel">Label *</label>
+      <input id="linkLabel" type="text" name="label" placeholder="e.g. Calendly" value="<%= linkForm.label || '' %>" required>
+      <small id="linkLabelError" style="color:#ff6b6b;display:none;">Please enter a label (2+ characters).</small>
+
+      <label class="admin-label" for="linkUrl" style="margin-top:15px;">URL *</label>
+      <input id="linkUrl" type="url" name="url" placeholder="https://..." value="<%= linkForm.url || '' %>" required>
+      <small id="linkUrlError" style="color:#ff6b6b;display:none;">Please enter a valid URL including http or https.</small>
+
+      <label class="admin-label" for="linkIcon" style="margin-top:15px;">Font Awesome Icon Class</label>
+      <input id="linkIcon" type="text" name="icon" placeholder="fa-solid fa-link" value="<%= linkForm.icon || '' %>">
+      <small id="linkIconHint" style="color:#ababab;display:block;margin-top:5px;">Optional: leave blank to use the default link icon.</small>
+
+      <button type="submit" class="btn btn2" style="margin-top:20px;">Add Link</button>
+    </form>
+
+    <div style="margin-top:30px;">
+      <% if (!contactLinks || contactLinks.length === 0) { %>
+        <p>No additional contact links yet.</p>
+      <% } else { %>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+          <% contactLinks.forEach(link => { %>
+            <div style="background:#262626;padding:20px;border-radius:10px;">
+              <h3 style="margin-bottom:10px;"><i class="<%= link.icon %>" style="margin-right:8px;"></i><%= link.label %></h3>
+              <p style="font-size:14px;word-break:break-all;"><a href="<%= link.url %>" target="_blank" rel="noreferrer" style="color:#61b752;"><%= link.url %></a></p>
+              <form method="post" action="/admin/settings/links/<%= link.id %>/delete" style="margin-top:15px;">
+                <button type="submit" class="btn">Delete</button>
+              </form>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <h2 class="sub-title" style="font-size:28px;">Current Public Contact Info</h2>
+    <div style="background:#262626;padding:20px;border-radius:10px;margin-top:20px;">
+      <p><strong>Email:</strong> <%= currentSettings.email || 'Not set' %></p>
+      <p><strong>Phone:</strong> <%= currentSettings.phone || 'Not set' %></p>
+      <p><strong>Facebook:</strong> <%= currentSettings.facebook || 'Not set' %></p>
+      <p><strong>LinkedIn:</strong> <%= currentSettings.linkedin || 'Not set' %></p>
+      <p><strong>GitHub:</strong> <%= currentSettings.github || 'Not set' %></p>
+      <p><strong>Instagram:</strong> <%= currentSettings.instagram || 'Not set' %></p>
+      <div style="margin-top:15px;">
+        <strong>Additional Links:</strong>
+        <% if (!contactLinks || contactLinks.length === 0) { %>
+          <p style="color:#ababab;">None</p>
+        <% } else { %>
+          <ul style="margin-top:5px;padding-left:18px;">
+            <% contactLinks.forEach(link => { %>
+              <li><%= link.label %> - <%= link.url %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  (function(){
+    var form = document.getElementById('settingsForm');
+    if (!form) return;
+
+    var emailInput = document.getElementById('settingsEmail');
+    var phoneInput = document.getElementById('settingsPhone');
+    var urlFields = [
+      { input: document.getElementById('settingsFacebook'), error: document.getElementById('settingsFacebookError') },
+      { input: document.getElementById('settingsLinkedin'), error: document.getElementById('settingsLinkedinError') },
+      { input: document.getElementById('settingsGithub'), error: document.getElementById('settingsGithubError') },
+      { input: document.getElementById('settingsInstagram'), error: document.getElementById('settingsInstagramError') }
+    ];
+    var emailError = document.getElementById('settingsEmailError');
+    var phoneError = document.getElementById('settingsPhoneError');
+
+    function hideErrors(){
+      emailError.style.display = 'none';
+      phoneError.style.display = 'none';
+      urlFields.forEach(function(field){ field.error.style.display = 'none'; });
+    }
+
+    function isValidEmail(value){
+      var re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      return re.test(value);
+    }
+
+    function isValidUrl(value){
+      try {
+        new URL(value);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    form.addEventListener('submit', function(e){
+      hideErrors();
+      var hasError = false;
+
+      var emailVal = (emailInput.value || '').trim();
+      var phoneVal = (phoneInput.value || '').trim();
+
+      if (!emailVal || !isValidEmail(emailVal)){
+        emailError.style.display = 'block';
+        hasError = true;
+      }
+      if (!phoneVal){
+        phoneError.style.display = 'block';
+        hasError = true;
+      }
+
+      urlFields.forEach(function(field){
+        var val = (field.input.value || '').trim();
+        if (val && !isValidUrl(val)){
+          field.error.style.display = 'block';
+          hasError = true;
+        }
+      });
+
+      if (hasError){
+        e.preventDefault();
+      }
+    });
+  })();
+
+  (function(){
+    var linkForm = document.getElementById('customLinkForm');
+    if (!linkForm) return;
+
+    var labelInput = document.getElementById('linkLabel');
+    var urlInput = document.getElementById('linkUrl');
+    var labelError = document.getElementById('linkLabelError');
+    var urlError = document.getElementById('linkUrlError');
+
+    function hideLinkErrors(){
+      labelError.style.display = 'none';
+      urlError.style.display = 'none';
+    }
+
+    function isValidUrl(value){
+      try {
+        new URL(value);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    linkForm.addEventListener('submit', function(e){
+      hideLinkErrors();
+      var hasError = false;
+      var label = (labelInput.value || '').trim();
+      var url = (urlInput.value || '').trim();
+
+      if (!label || label.length < 2){
+        labelError.style.display = 'block';
+        hasError = true;
+      }
+      if (!url || !isValidUrl(url)){
+        urlError.style.display = 'block';
+        hasError = true;
+      }
+
+      if (hasError){
+        e.preventDefault();
+      }
+    });
+  })();
+</script>
+<%- include('../partials/footer') %>
+

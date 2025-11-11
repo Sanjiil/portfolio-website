@@ -1,0 +1,85 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="padding-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <h1 class="sub-title">Admin Users</h1>
+    <div>
+      <a href="/admin/dashboard" class="btn" style="margin-right:10px;">Back to Dashboard</a>
+      <form method="post" action="/admin/logout" style="display:inline;">
+        <button type="submit" class="btn btn2">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <h2 style="margin-top:30px;">Create New Admin User</h2>
+  <% if (flash && flash.userSuccess) { %>
+    <p style="color:#61b752;margin-top:10px;"><%= flash.userSuccess %></p>
+  <% } %>
+  <% if (flash && flash.userError) { %>
+    <p style="color:#ff6b6b;margin-top:10px;"><%= flash.userError %></p>
+  <% } %>
+  <form id="adminUserForm" method="post" action="/admin/users" style="margin-top:10px;max-width:500px;" novalidate>
+    <input id="adminUsernameInput" type="text" name="username" placeholder="New admin username" required>
+    <small id="adminUsernameError" style="color:#ff6b6b;display:none;">Please enter a username (3+ characters).</small>
+    <input id="adminPasswordInput" type="password" name="password" placeholder="Temporary password (min 6 chars)" required>
+    <small id="adminPasswordError" style="color:#ff6b6b;display:none;">Please enter a password with at least 6 characters.</small>
+    <button type="submit" class="btn btn2" style="margin-top:10px;">Create Admin User</button>
+  </form>
+
+  <h2 style="margin-top:40px;">Existing Admin Users</h2>
+  <div style="margin-top:20px;">
+    <% if (!users || users.length === 0) { %>
+      <p>No admin users yet.</p>
+    <% } else { %>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;">
+        <% users.forEach(u => { %>
+          <div style="background:#262626;padding:20px;border-radius:10px;">
+            <h3 style="margin-bottom:10px;"><i class="fa-solid fa-user-shield" style="margin-right:8px;"></i><%= u.username %></h3>
+            <p style="font-size:14px;color:#ababab;">Created <%= new Date(u.createdAt).toLocaleString() %></p>
+            <% if (user && user.username === u.username) { %>
+              <p style="font-size:12px;color:#61b752;margin-top:10px;">You are signed in as this user.</p>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>
+<script>
+  (function(){
+    var form = document.getElementById('adminUserForm');
+    if (!form) return;
+
+    var usernameInput = document.getElementById('adminUsernameInput');
+    var passwordInput = document.getElementById('adminPasswordInput');
+    var usernameError = document.getElementById('adminUsernameError');
+    var passwordError = document.getElementById('adminPasswordError');
+
+    function hideErrors(){
+      usernameError.style.display = 'none';
+      passwordError.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function(e){
+      hideErrors();
+      var hasError = false;
+      var username = (usernameInput.value || '').trim();
+      var password = passwordInput.value || '';
+
+      if (username.length < 3){
+        usernameError.style.display = 'block';
+        hasError = true;
+      }
+      if (password.length < 6){
+        passwordError.style.display = 'block';
+        hasError = true;
+      }
+
+      if (hasError){
+        e.preventDefault();
+        return;
+      }
+    });
+  })();
+</script>
+<%- include('../partials/footer') %>
+

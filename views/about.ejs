@@ -1,0 +1,53 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="/assets/images/user.jpg">
+            </div>
+            <div class="about-col-2">
+            <h1 class="sub-title"> About Me</h1>
+            <p> I'm Sanjil Shahi, a passionate QA Engineer with a strong focus on delivering high-quality software. With experience at Ojas Digital, Axios Softwork, and Rumsan. My goal is to ensure every product I work on is reliable and user-friendly. Let's connect to discuss how I can help your team achieve excellence!</p>
+               <div class="tab-titles">
+                <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                <p class="tab-links" onclick="opentab('education')">Education</p>
+               </div>
+               <div class="tab-contents active-tab" id="skills">
+                    <ul>
+                         <li><span>Manual Testing</span><br>User Acceptance Testing</li>
+                         <li><span>API Testing</span><br>API Functional Testing</li>
+                         <li><span>Performace Testing </span><br>Performance Testing, Stress Testing, Load Testing</li>
+                    </ul>
+               </div>
+               <div class="tab-contents" id="experience">
+                    <ul>
+                        <li><span>Jun 2024- Present</span><br>Mid Level Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                        <li><span>Jan 2024- Jun 2024</span><br>Junior Quality Assurance <br> (Ojas Digital Marketing and Production House)</li>
+                        <li><span>Sep 2023- Dec 2023</span><br>Quality Assurance Intern <br> (Axios Softwork)</li>
+                    </ul>
+               </div>
+               <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>2023</span><br>BICT from Virinchi International College, Lalitpur</li>
+                        <li><span>2018</span><br>+2 Science from Banepa Nist, Banepa</li>
+                        <li><span>2016</span><br>SEE from Rambhakta Memorial School, Banepa</li>
+                    </ul>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+    function opentab(tabname){
+        for(tablink of tablinks){ tablink.classList.remove("active-link") }
+        for(tabcontent of tabcontents){ tabcontent.classList.remove("active-tab") }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+</script>
+<%- include('partials/footer') %>
+

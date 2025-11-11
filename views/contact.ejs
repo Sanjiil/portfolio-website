@@ -1,0 +1,44 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact Me</h1>
+                <p><i class="fa-solid fa-paper-plane"></i> <%= settings.email %></p>
+                <p><i class="fa-solid fa-mobile-screen-button"></i> <%= settings.phone %></p>
+                <div class="social-icons">
+                    <a href="<%= settings.facebook %>"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="<%= settings.linkedin %>"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="<%= settings.github %>"><i class="fa-brands fa-github"></i></a>
+                    <a href="<%= settings.instagram %>"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <% if (contactLinks && contactLinks.length > 0) { %>
+                  <div class="extra-contact-links">
+                    <h3>More Ways to Connect</h3>
+                    <ul>
+                      <% contactLinks.forEach(link => { %>
+                        <li>
+                          <i class="<%= link.icon %>"></i>
+                          <a href="<%= link.url %>" target="_blank" rel="noreferrer"><%= link.label %></a>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+                <% } %>
+                <a href="/assets/images/CV_SANJIL_SHAHI.pdf" download class="btn btn2">Download CV</a>
+            </div>
+            <div class="contact-right">
+                <form method="post" action="https://script.google.com/macros/s/AKfycbyP-EQJqGfvRexVjZmJ-WuoFyX0HOco24BK-xTIgq09AzsGXWROACRDWi-a_muzp99p1w/exec">
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
+                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                    <button type="submit" class="btn btn2">Submit</button>
+                </form>
+                <span id="msg"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+

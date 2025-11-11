@@ -1,0 +1,31 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="padding-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h1 class="sub-title">Dashboard</h1>
+    <form method="post" action="/admin/logout">
+      <button type="submit" class="btn btn2">Logout</button>
+    </form>
+  </div>
+
+  <div style="margin-top:30px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="/admin/services" class="btn btn2"><i class="fa-solid fa-code" style="margin-right:8px;"></i>Manage Services</a>
+    <a href="/admin/portfolio" class="btn btn2"><i class="fa-solid fa-briefcase" style="margin-right:8px;"></i>Manage Portfolio</a>
+    <a href="/admin/users" class="btn btn2"><i class="fa-solid fa-user-shield" style="margin-right:8px;"></i>Manage Admin Users</a>
+    <a href="/admin/settings" class="btn btn2"><i class="fa-solid fa-address-card" style="margin-right:8px;"></i>Contact &amp; Social Settings</a>
+  </div>
+
+  <div style="margin-top:40px;padding:30px;background:#262626;border-radius:10px;">
+    <h2 style="margin-bottom:20px;">Welcome to Admin Dashboard</h2>
+    <p style="color:#ababab;line-height:1.8;">
+      Use the buttons above to manage different sections of your portfolio website:
+    </p>
+    <ul style="color:#ababab;line-height:2;margin-top:15px;padding-left:20px;">
+      <li><strong style="color:#fff;">Services</strong> - Add, edit, or delete services offered</li>
+      <li><strong style="color:#fff;">Portfolio</strong> - Manage your portfolio projects and work samples</li>
+      <li><strong style="color:#fff;">Admin Users</strong> - Create and manage admin accounts</li>
+      <li><strong style="color:#fff;">Contact &amp; Social Settings</strong> - Update contact information and social media links</li>
+    </ul>
+  </div>
+</div>
+<%- include('../partials/footer') %>
+

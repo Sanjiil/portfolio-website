@@ -1,0 +1,63 @@
+<%- include('../partials/head', { title }) %>
+<div class="container" style="max-width:600px;padding-top:60px;">
+  <h1 class="sub-title">Admin Login</h1>
+  <% if (error) { %>
+    <p id="serverError" style="color:#ff6b6b;margin-top:10px; display:none;"><%= error %></p>
+  <% } %>
+  <form id="loginForm" method="post" action="/admin/login" style="margin-top:20px;" novalidate>
+    <input id="usernameInput" type="text" name="username" placeholder="Username" required>
+    <small id="usernameError" style="color:#ff6b6b;display:none;">Please enter your username.</small>
+    <input id="passwordInput" type="password" name="password" placeholder="Password" required>
+    <small id="passwordError" style="color:#ff6b6b;display:none;">Please enter your password (min 6 characters).</small>
+    <button type="submit" class="btn btn2" style="margin-top:10px;">Login</button>
+  </form>
+  <small id="genericError" style="color:#ff6b6b;display:none;margin-top:10px;display:block;">Entered username or password is incorrect.</small>
+</div>
+<script>
+  (function(){
+    var form = document.getElementById('loginForm');
+    var usernameInput = document.getElementById('usernameInput');
+    var passwordInput = document.getElementById('passwordInput');
+    var usernameError = document.getElementById('usernameError');
+    var passwordError = document.getElementById('passwordError');
+    var genericError = document.getElementById('genericError');
+    var serverError = document.getElementById('serverError');
+    var submitted = false;
+
+    function clearErrors(){
+      usernameError.style.display = 'none';
+      passwordError.style.display = 'none';
+      genericError.style.display = submitted ? 'block' : 'none';
+      if (serverError) serverError.style.display = submitted ? 'block' : 'none';
+    }
+
+    form.addEventListener('submit', function(e){
+      clearErrors();
+      var hasError = false;
+
+      var usernameVal = usernameInput.value.trim();
+      var passwordVal = passwordInput.value;
+
+      if (!usernameVal){
+        usernameError.style.display = 'block';
+        hasError = true;
+      }
+      if (!passwordVal || passwordVal.length < 6){
+        passwordError.style.display = 'block';
+        hasError = true;
+      }
+
+      submitted = true;
+      if (hasError){
+        genericError.style.display = 'block';
+        if (serverError) serverError.style.display = 'block';
+        e.preventDefault();
+        return;
+      }
+    });
+
+    // Do not show server error or generic error until user attempts submit
+  })();
+  </script>
+<%- include('../partials/footer') %>
+
